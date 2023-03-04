@@ -54,7 +54,7 @@ public class ConnectionServiceImpl implements ConnectionService {
             String providerid = String.valueOf(serviceProvider1.getId());
             String maskedip = countycode+"."+providerid+"."+userId;
             user.setMaskedIp(maskedip);
-            user.setConnected(true);
+            user.setConnected(Boolean.TRUE);
             user.getConnectionList().add(connection);
             serviceProvider1.getConnectionList().add(connection);
             userRepository2.save(user);
@@ -76,7 +76,7 @@ public class ConnectionServiceImpl implements ConnectionService {
             throw new Exception("Already disconnected");
 
         user.setMaskedIp(null);
-        user.setConnected(false);
+        user.setConnected(Boolean.FALSE);
         userRepository2.save(user);
         return user;
 
