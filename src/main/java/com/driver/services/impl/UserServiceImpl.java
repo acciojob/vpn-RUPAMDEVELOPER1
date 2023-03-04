@@ -1,9 +1,6 @@
 package com.driver.services.impl;
 
-import com.driver.model.Country;
-import com.driver.model.CountryName;
-import com.driver.model.ServiceProvider;
-import com.driver.model.User;
+import com.driver.model.*;
 import com.driver.repository.CountryRepository;
 import com.driver.repository.ServiceProviderRepository;
 import com.driver.repository.UserRepository;
@@ -16,8 +13,10 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     UserRepository userRepository3;
+
     @Autowired
     ServiceProviderRepository serviceProviderRepository3;
+
     @Autowired
     CountryRepository countryRepository3;
 
@@ -27,46 +26,46 @@ public class UserServiceImpl implements UserService {
             User user = new User();
             user.setUsername(username);
             user.setPassword(password);
-            user.setConnected(Boolean.FALSE);
-            user.setMaskedIp(null);
+
             Country country = new Country();
-            if (countryName.equalsIgnoreCase("ind")) {
+
+            if(countryName.equalsIgnoreCase("ind")){
                 country.setCountryName(CountryName.IND);
                 country.setCode(CountryName.IND.toCode());
             }
 
-            if (countryName.equalsIgnoreCase("aus")) {
+            if(countryName.equalsIgnoreCase("aus")){
                 country.setCountryName(CountryName.AUS);
                 country.setCode(CountryName.AUS.toCode());
             }
 
-            if (countryName.equalsIgnoreCase("usa")) {
+            if(countryName.equalsIgnoreCase("usa")){
                 country.setCountryName(CountryName.USA);
                 country.setCode(CountryName.USA.toCode());
             }
 
-            if (countryName.equalsIgnoreCase("jpn")) {
+            if(countryName.equalsIgnoreCase("jpn")){
                 country.setCountryName(CountryName.JPN);
                 country.setCode(CountryName.JPN.toCode());
             }
 
-            if (countryName.equalsIgnoreCase("chi")) {
+            if(countryName.equalsIgnoreCase("chi")){
                 country.setCountryName(CountryName.CHI);
                 country.setCode(CountryName.CHI.toCode());
             }
+
             country.setUser(user);
             user.setOriginalCountry(country);
+            user.setConnected(false);
+            user.setMaskedIp(null);
+
+            String OriginalIp = country.getCode() + "." + userRepository3.save(user).getId();
+            user.setOriginalIp(OriginalIp);
             userRepository3.save(user);
-
-
-            String originalIp = country.getCode() + "." + user.getId();
-            user.setOriginalIp(originalIp);
             return user;
+        }else{
+            throw new Exception("Country not found");
         }
-        else {
-            throw new Exception("country not found");
-        }
-
     }
 
     @Override
@@ -76,8 +75,8 @@ public class UserServiceImpl implements UserService {
 
         user.getServiceProviderList().add(serviceProvider);
         serviceProvider.getUsers().add(user);
+
         serviceProviderRepository3.save(serviceProvider);
         return user;
-
     }
 }

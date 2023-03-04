@@ -1,12 +1,12 @@
-package com.driver.model;
-
 // Note: Do not write @Enumerated annotation above CountryName in this model.
+package com.driver.model;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "country")
-public class Country{
+public class Country {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -19,8 +19,17 @@ public class Country{
     @JoinColumn
     private ServiceProvider serviceProvider;
 
-    @OneToOne(mappedBy = "originalCountry",cascade = CascadeType.ALL)
+    @OneToOne
+    @JoinColumn
     private User user;
+
+    public Country(CountryName countryName, String code) {
+        this.countryName = countryName;
+        this.code = code;
+    }
+
+    public Country() {
+    }
 
     public int getId() {
         return id;
@@ -61,7 +70,5 @@ public class Country{
     public void setUser(User user) {
         this.user = user;
     }
-
-    public Country() {
-    }
 }
+

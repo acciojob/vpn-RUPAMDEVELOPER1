@@ -1,12 +1,12 @@
 package com.driver.model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "user")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -19,15 +19,20 @@ public class User {
 
     private String maskedIp;
 
-    private boolean connected;
-
-    @OneToOne
-    @JoinColumn
-    private Country originalCountry;
+    private Boolean connected;
 
     @ManyToMany
     @JoinColumn
     private List<ServiceProvider> serviceProviderList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private List<Connection> connectionList = new ArrayList<>();
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Country originalCountry;
+
+    public User() {
+    }
 
     public int getId() {
         return id;
@@ -69,23 +74,12 @@ public class User {
         this.maskedIp = maskedIp;
     }
 
-    public boolean isConnected() {
+    public Boolean getConnected() {
         return connected;
     }
 
-    public void setConnected(boolean connected) {
+    public void setConnected(Boolean connected) {
         this.connected = connected;
-    }
-    public boolean getConnected() {
-        return connected;
-    }
-
-    public Country getOriginalCountry() {
-        return originalCountry;
-    }
-
-    public void setOriginalCountry(Country originalCountry) {
-        this.originalCountry = originalCountry;
     }
 
     public List<ServiceProvider> getServiceProviderList() {
@@ -104,13 +98,11 @@ public class User {
         this.connectionList = connectionList;
     }
 
-    public User() {
+    public Country getOriginalCountry() {
+        return originalCountry;
     }
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
-    private List<Connection> connectionList = new ArrayList<>();
-
-
-
-
+    public void setOriginalCountry(Country originalCountry) {
+        this.originalCountry = originalCountry;
+    }
 }
