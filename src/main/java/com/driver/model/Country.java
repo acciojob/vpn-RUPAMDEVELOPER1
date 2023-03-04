@@ -19,7 +19,7 @@ public class Country{
     @JoinColumn
     private ServiceProvider serviceProvider;
 
-    @OneToOne(mappedBy = "country",cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "originalCountry",cascade = CascadeType.ALL)
     private User user;
 
     public int getId() {

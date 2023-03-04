@@ -23,7 +23,7 @@ public class User {
 
     @OneToOne
     @JoinColumn
-    private Country country;
+    private Country originalCountry;
 
     @ManyToMany
     @JoinColumn
@@ -80,12 +80,12 @@ public class User {
         return connected;
     }
 
-    public Country getCountry() {
-        return country;
+    public Country getOriginalCountry() {
+        return originalCountry;
     }
 
-    public void setCountry(Country country) {
-        this.country = country;
+    public void setOriginalCountry(Country originalCountry) {
+        this.originalCountry = originalCountry;
     }
 
     public List<ServiceProvider> getServiceProviderList() {
