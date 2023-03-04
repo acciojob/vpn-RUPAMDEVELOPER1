@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
             User user = new User();
             user.setUsername(username);
             user.setPassword(password);
-            user.setConnected(false);
+            user.setConnected(Boolean.FALSE);
             user.setMaskedIp(null);
             Country country = new Country();
             if (countryName.equalsIgnoreCase("ind")) {
